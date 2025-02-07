@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <title>SATSOIL</title>
+  <!-- Leaflet CSS（無料地図ライブラリ） -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.3/dist/leaflet.css"
+    integrity="sha256-sA+e2E5F82UULR+3fT7nYw1yR+tqXEk6oygUrdg9+QA="
+    crossorigin=""/>
+  <!-- メインCSS -->
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <!-- ヘッダー -->
+  <header>
+    <div class="logo" data-i18n="logo">SATSOIL</div>
+    <div class="lang-switcher">
+      <button onclick="setLanguage('ja')">日本語</button>
+      <button onclick="setLanguage('en')">English</button>
+    </div>
+    <nav>
+      <ul>
+        <li onclick="showSection('home')"><span data-i18n="nav.home">ダッシュボード</span></li>
+        <li onclick="showSection('search')"><span data-i18n="nav.search">農地検索</span></li>
+        <li onclick="showSection('mypage')"><span data-i18n="nav.mypage">投資ポートフォリオ</span></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main>
+    <!-- 1. ダッシュボード セクション -->
+    <section id="home" class="active">
+      <h2 data-i18n="section.home.title">ダッシュボード</h2>
+      <p>ようこそ。SATSOILは最新の農地投資市場情報、注目案件および各種通知を提供する統合プラットフォームです。</p>
+      <br/>
+      <h3 data-i18n="section.home.recommended">注目の農地</h3>
+      <div class="card-grid">
+        <!-- 例：農地A～C -->
+        <div class="card" onclick="showSection('farmADetail')">
+          <img src="https://via.placeholder.com/400x200?text=Farm+A" alt="農地A">
+          <div class="title">農地A</div>
+          <div class="subtitle">
+            予想ROI：8%<br>
+            洪水リスク：低
+          </div>
+        </div>
+        <div class="card" onclick="showSection('farmBDetail')">
+          <img src="https://via.placeholder.com/400x200?text=Farm+B" alt="農地B">
+          <div class="title">農地B</div>
+          <div class="subtitle">
+            予想ROI：10%<br>
+            洪水リスク：中
+          </div>
+        </div>
+        <div class="card" onclick="showSection('farmCDetail')">
+          <img src="https://via.placeholder.com/400x200?text=Farm+C" alt="農地C">
+          <div class="title">農地C</div>
+          <div class="subtitle">
+            予想ROI：6%<br>
+            病害虫リスク：低
+          </div>
+        </div>
+      </div>
+      <br/>
+      <h3 data-i18n="section.home.alerts">最新市場レポート</h3>
+      <ul>
+        <li>2025/01/31: 農地BエリアのNDVI指標が上昇傾向</li>
+        <li>2025/01/29: 台風接近に伴う強風注意報（地域X）</li>
+        <li>2025/01/27: 農地Dにおける土壌pH改善の兆候検出</li>
+        <li>2025/01/25: 農地Mで輪作効果向上が確認</li>
+        <li>2025/01/20: 新規作物試験結果（トマト・レタス）を発表</li>
+      </ul>
+    </section>
+
+    <!-- 2. 農地検索 セクション（タブ式） -->
+    <section id="search">
+      <h2 data-i18n="section.search.title">農地検索</h2>
+      <div class="tab-container">
+        <button class="tab active" id="tabSimple" onclick="switchSearchTab('simple')">簡易検索</button>
+        <button class="tab" id="tabDetailed" onclick="switchSearchTab('detailed')">詳細検索</button>
+      </div>
+      <!-- 簡易検索フィルタ -->
+      <div id="simpleSearch">
+        <div class="filter-area">
+          <label for="regionGroup" data-i18n="section.search.regionGroup">地域グループ:</label>
+          <select id="regionGroup" onchange="updateCountryOptions()">
+            <option value="">指定なし</option>
+            <option value="Asia">Asia</option>
+            <option value="Africa">Africa</option>
+            <option value="Europe">Europe</option>
+            <option value="NorthAmerica">North America</option>
+            <option value="SouthAmerica">South America</option>
+            <option value="Oceania">Oceania</option>
+          </select>
+          <label for="country">国:</label>
+          <select id="country" onchange="updatePrefectureOptions()">
+            <option value="">指定なし</option>
+          </select>
+          <label for="prefecture">都道府県/州:</label>
+          <select id="prefecture">
+            <option value="">指定なし</option>
+          </select>
+          <label for="regionDetail" data-i18n="section.search.regionDetail">地域詳細:</label>
+          <input type="text" id="regionDetail" placeholder="例：Tokyo, Kenya">
+          <label for="minScore" data-i18n="section.search.evalRange">評価スコア範囲:</label>
+          <input type="number" id="minScore" placeholder="下限" min="0" max="100">
+          <input type="number" id="maxScore" placeholder="上限" min="0" max="100">
+        </div>
+      </div>
+      <!-- 詳細検索フィルタ -->
+      <div id="detailedSearch" style="display:none;">
+        <div class="filter-area">
+          <label for="soil" data-i18n="section.search.soil">土壌pH:</label>
+          <select id="soil">
+            <option value="">指定なし</option>
+            <option value="low">～5.5 (酸性寄り)</option>
+            <option value="medium">5.5～6.5 (中性)</option>
+            <option value="high">6.5～ (アルカリ寄り)</option>
+          </select>
+          <label for="floodRisk" data-i18n="section.search.floodRisk">洪水リスク:</label>
+          <select id="floodRisk">
+            <option value="">指定なし</option>
+            <option value="low">低</option>
+            <option value="medium">中</option>
+            <option value="high">高</option>
+          </select>
+          <label for="cropType" data-i18n="section.search.crop">作物:</label>
+          <select id="cropType">
+            <option value="">指定なし</option>
+            <option value="rice">米</option>
+            <option value="wheat">小麦</option>
+            <option value="soy">大豆</option>
+            <option value="tomato">トマト</option>
+            <option value="lettuce">レタス</option>
+            <option value="cucumber">キュウリ</option>
+            <option value="pepper">ピーマン</option>
+            <option value="cotton">綿</option>
+          </select>
+          <label for="waterSupply" data-i18n="section.search.irrigation">灌漑設備充実度:</label>
+          <input type="number" id="waterSupply" placeholder="0～100" min="0" max="100">
+          <label for="accessibility" data-i18n="section.search.accessibility">交通アクセス利便性:</label>
+          <input type="number" id="accessibility" placeholder="0～100" min="0" max="100">
+          <label for="cropDiversity" data-i18n="section.search.cropVariety">作付け多様性:</label>
+          <input type="number" id="cropDiversity" placeholder="0～100" min="0" max="100">
+        </div>
+      </div>
+      <div class="filter-submit">
+        <button class="btn" onclick="searchFarmland()" data-i18n="section.search.search">検索</button>
+      </div>
+      <!-- 地図エリア -->
+      <div id="map" class="map-placeholder"></div>
+      <h3>検索結果</h3>
+      <div class="card-grid" id="searchResults">
+        <!-- 検索結果は script.js で生成 -->
+      </div>
+    </section>
+
+    <!-- 3. 農地A 詳細 セクション（デモ） -->
+    <section id="farmADetail">
+      <h2>農地A 詳細情報</h2>
+      <p>所在地：北海道・札幌市 / 面積：2.3 ha / オーナー：〇〇ファーム<br>
+         潜在能力スコア：82（最適な土壌pHおよび輪作効果を反映）</p>
+      <div class="detail-container">
+        <div class="detail-image-area">
+          <h3>衛星タイムラプス</h3>
+          <img id="farmAImage" src="https://via.placeholder.com/400x200?text=FarmA+2020" alt="FarmA 2020">
+          <br/>
+          <button class="btn btn-secondary" onclick="changeFarmAImage(2020)">2020</button>
+          <button class="btn btn-secondary" onclick="changeFarmAImage(2021)">2021</button>
+          <button class="btn btn-secondary" onclick="changeFarmAImage(2022)">2022</button>
+        </div>
+        <div class="detail-info-area">
+          <div class="risk-container">
+            <h3>リスク指標</h3>
+            <p>洪水リスク：低</p>
+            <p>土壌浸食リスク：低</p>
+            <p>病害虫リスク：中</p>
+          </div>
+          <div class="ndvi-container">
+            <h3>NDVI 推移</h3>
+            <img src="https://via.placeholder.com/300x150?text=FarmA+NDVI+Graph" alt="FarmA NDVI Graph">
+            <p>平均 NDVI：0.65（比較的安定）</p>
+          </div>
+          <div class="simulation-container">
+            <h3>投資シミュレーション</h3>
+            <p id="farmASimulationResult">
+              基準ROI：8%<br>
+              輪作最適化効果：＋2%<br>
+              生産管理改善効果：＋2%<br>
+              先物価格調整：＋0.5%<br>
+              --------------<br>
+              予測ROI：12.5%
+            </p>
+            <br/>
+            <button class="btn" onclick="showSection('ddReport')">DDレポート生成</button>
+            <button class="btn btn-secondary" onclick="showSection('investFlow')">投資手続きへ</button>
+          </div>
+          <div style="margin-top:10px;">
+            <button class="btn" onclick="addToWatchlist('農地A')">ウォッチリストに追加</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 7. DDレポート セクション -->
+    <section id="ddReport">
+      <h2 data-i18n="section.ddReport.title">DDレポート</h2>
+      <p>こちらは、投資判断に必要な解析データと詳細な分析コメントをまとめたレポートです。</p>
+      <div class="dd-report-container">
+        <h3>1. 農地概要</h3>
+        <p>所在地：北海道・札幌市</p>
+        <p>面積：2.3 ha</p>
+        <p>オーナー：〇〇ファーム</p>
+        <p>潜在能力スコア：82</p>
+        <h3>2. 衛星解析</h3>
+        <p>平均 NDVI：0.60～0.65（安定推移）</p>
+        <p>洪水リスク：低～中</p>
+        <img src="https://via.placeholder.com/400x200?text=Satellite+Analysis+Summary" alt="Satellite Analysis">
+        <h3>3. 土壌・気候データ</h3>
+        <p>土壌pH：6.0～6.5 / 有機物量：高め</p>
+        <p>年間降水量：約1200mm / 日照時間：2000h</p>
+        <h3>4. リスク評価と収益性</h3>
+        <ul>
+          <li>病害虫リスク：低～中</li>
+          <li>土壌浸食リスク：低</li>
+          <li>収量予測：1000～1200 kg/ha</li>
+          <li>価格変動：過去3年の変動±5%</li>
+        </ul>
+        <h3>5. 分析コメント</h3>
+        <p>全体としてリスクは低水準にあり、輪作最適化と生産管理の徹底により収益性の向上が期待されます。商品先物価格および干ばつリスクを考慮した定期モニタリングを推奨いたします。</p>
+      </div>
+      <br/>
+      <button class="btn btn-secondary" onclick="showSection('farmADetail')" data-i18n="section.ddReport.back">戻る</button>
+    </section>
+
+    <!-- 8. 投資手続き セクション -->
+    <section id="investFlow">
+      <h2 data-i18n="section.investFlow.title">投資手続き</h2>
+      <p>以下のステップに従い、投資手続きを進めてください。</p>
+      <ol>
+        <li>
+          <h4>本人確認</h4>
+          <p>身分証明書のアップロードおよび本人確認書類の提出が必要です。</p>
+          <button class="btn btn-secondary" onclick="alert('本人確認書類アップロード画面へ')">アップロード</button>
+        </li>
+        <li>
+          <h4>契約書類の確認</h4>
+          <p>電子契約書の内容をご確認の上、電子署名を実行してください。</p>
+          <button class="btn btn-secondary" onclick="alert('電子署名画面へ')">電子署名</button>
+        </li>
+        <li>
+          <h4>投資額設定</h4>
+          <p>適正投資額の目安：<strong>1,000,000円</strong></p>
+          <label for="investAmount">投資額 (円):</label>
+          <input type="number" id="investAmount" value="1000000">
+          <button class="btn btn-secondary" onclick="confirmInvestAmount()">確定</button>
+        </li>
+        <li>
+          <h4>お支払い</h4>
+          <p>銀行振込、オンライン決済、クレジットカードなど各種決済に対応しております。</p>
+          <button class="btn" onclick="alert('決済画面へ')">決済へ進む</button>
+        </li>
+      </ol>
+      <button class="btn btn-secondary" onclick="showSection('farmADetail')">キャンセル</button>
+    </section>
+
+    <!-- 9. 投資ポートフォリオ セクション -->
+    <section id="mypage">
+      <h2 data-i18n="section.mypage.title">投資ポートフォリオ</h2>
+      <h3>投資中の農地</h3>
+      <table>
+        <thead>
+          <tr>
+            <th>農地名</th>
+            <th>投資額</th>
+            <th>現在価値</th>
+            <th>予測ROI</th>
+          </tr>
+        </thead>
+        <tbody id="investedFarmsTable">
+          <!-- 投資データは script.js で生成 -->
+        </tbody>
+      </table>
+      <br/>
+      <h3>ウォッチリスト</h3>
+      <ul id="watchlist">
+        <!-- ウォッチリストは script.js で更新 -->
+      </ul>
+      <br/>
+      <h3>レポート一覧</h3>
+      <ul>
+        <li>
+          <a href="#" class="btn btn-secondary">2025/01/15 レポートダウンロード</a>
+          <img src="https://via.placeholder.com/150x200?text=Report+Preview" alt="レポートプレビュー">
+        </li>
+        <li>
+          <a href="#" class="btn btn-secondary">2024/12/30 レポートダウンロード</a>
+          <img src="https://via.placeholder.com/150x200?text=Report+Preview" alt="レポートプレビュー">
+        </li>
+      </ul>
+    </section>
+  </main>
+
+  <!-- Leaflet JS -->
+  <script src="https://unpkg.com/leaflet@1.9.3/dist/leaflet.js"
+    integrity="sha256-o9N1j7kMt0u+vR+Q2Z7S1BcyVvY9P5nT9dT+9A94E3U="
+    crossorigin=""></script>
+  <!-- メイン JavaScript -->
+  <script src="script.js"></script>
+</body>
+</html>

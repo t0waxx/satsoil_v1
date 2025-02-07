@@ -1,0 +1,278 @@
+/* ====================== リセット/ベース ====================== */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+body {
+  font-family: 'Roboto', sans-serif;
+  background: #f0f2f5;
+  color: #333;
+  margin: 0;
+}
+
+/* ====================== ヘッダー ====================== */
+header {
+  background: linear-gradient(90deg, #2C3E50, #4CA1AF);
+  color: #fff;
+  padding: 15px 20px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+}
+header .logo {
+  font-size: 1.8rem;
+  font-weight: bold;
+}
+.lang-switcher {
+  margin: 5px;
+}
+.lang-switcher button {
+  margin-right: 5px;
+  padding: 6px 12px;
+  font-size: 0.9rem;
+  cursor: pointer;
+  border: none;
+  background: rgba(255,255,255,0.3);
+  color: #fff;
+  border-radius: 4px;
+  transition: background 0.3s;
+}
+.lang-switcher button:hover {
+  background: rgba(255,255,255,0.5);
+}
+header nav ul {
+  list-style: none;
+  display: flex;
+  gap: 20px;
+}
+header nav ul li {
+  cursor: pointer;
+  padding: 8px 12px;
+  transition: background 0.3s;
+  border-radius: 4px;
+}
+header nav ul li:hover {
+  background: rgba(255,255,255,0.3);
+}
+
+/* ====================== メインコンテンツ ====================== */
+main {
+  max-width: 1200px;
+  margin: 30px auto;
+  padding: 0 20px;
+}
+section {
+  display: none;
+}
+section.active {
+  display: block;
+}
+
+/* ====================== タブ式フィルタ ====================== */
+.tab-container {
+  margin-bottom: 10px;
+  text-align: center;
+}
+.tab {
+  padding: 10px 20px;
+  border: none;
+  background: #ddd;
+  cursor: pointer;
+  font-size: 1rem;
+  margin-right: 4px;
+  border-radius: 4px;
+  transition: background 0.3s;
+}
+.tab.active {
+  background: #4CA1AF;
+  color: #fff;
+}
+
+/* ====================== カード表示 ====================== */
+.card-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 20px;
+}
+.card {
+  background: #fff;
+  border-radius: 8px;
+  padding: 16px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
+.card:hover {
+  transform: translateY(-4px);
+}
+.card img {
+  width: 100%;
+  height: 180px;
+  object-fit: cover;
+  border-radius: 4px;
+}
+.card .title {
+  font-weight: bold;
+  margin: 10px 0 5px;
+  font-size: 1.2rem;
+}
+.card .subtitle {
+  color: #666;
+  font-size: 1rem;
+  line-height: 1.5;
+}
+
+/* ====================== フィルタUI (Search) ====================== */
+.filter-area {
+  margin-bottom: 16px;
+  background: #fff;
+  padding: 16px;
+  border-radius: 8px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+.filter-area label {
+  min-width: 140px;
+  font-weight: bold;
+  margin-right: 8px;
+}
+.filter-area input,
+.filter-area select {
+  padding: 6px 10px;
+  margin-right: 16px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+.filter-submit {
+  margin-top: 10px;
+  text-align: center;
+}
+
+/* 地図表示用 */
+.map-placeholder, #map {
+  min-height: 300px;
+  background: #bbb;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 20px;
+  border-radius: 8px;
+}
+
+/* ====================== 詳細ページ系 ====================== */
+.detail-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+.detail-image-area,
+.detail-info-area {
+  background: #fff;
+  border-radius: 8px;
+  padding: 20px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+.detail-image-area {
+  flex: 1 1 450px;
+}
+.detail-info-area {
+  flex: 1 1 350px;
+}
+.detail-image-area img {
+  width: 100%;
+  border-radius: 4px;
+  margin-bottom: 12px;
+}
+.risk-container,
+.ndvi-container,
+.simulation-container {
+  margin-bottom: 20px;
+}
+.risk-container h3,
+.ndvi-container h3,
+.simulation-container h3 {
+  font-size: 1.2rem;
+  margin-bottom: 8px;
+}
+
+/* ====================== DDレポート ====================== */
+.dd-report-container {
+  background: #fff;
+  border-radius: 8px;
+  padding: 20px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  margin-top: 20px;
+}
+.dd-report-container h3 {
+  margin-top: 16px;
+  margin-bottom: 8px;
+  font-size: 1.2rem;
+}
+.dd-report-container ul {
+  list-style: disc;
+  margin-left: 20px;
+  margin-bottom: 16px;
+}
+
+/* ====================== 投資手続きフロー ====================== */
+#investFlow ol {
+  margin: 20px 0;
+  padding-left: 20px;
+}
+#investFlow li {
+  margin-bottom: 20px;
+}
+#investFlow li h4 {
+  margin-bottom: 8px;
+  font-size: 1rem;
+  font-weight: bold;
+}
+#investFlow input[type="number"] {
+  width: 150px;
+  padding: 6px 10px;
+  margin-left: 5px;
+  margin-right: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+/* ====================== テーブル (My Page) ====================== */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+}
+table th,
+table td {
+  border: 1px solid #ddd;
+  padding: 10px;
+  text-align: left;
+}
+table th {
+  background: #f2f2f2;
+  font-weight: bold;
+}
+
+/* ====================== ボタン ====================== */
+.btn {
+  display: inline-block;
+  background: #4CA1AF;
+  color: #fff;
+  padding: 8px 16px;
+  border-radius: 4px;
+  text-decoration: none;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background 0.3s;
+  border: none;
+}
+.btn:hover {
+  background: #3B8D99;
+}
+.btn-secondary {
+  background: #777;
+}

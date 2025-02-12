@@ -96,18 +96,22 @@ function showSection(sectionId) {
  ****************************************************/
 let searchMap;
 window.addEventListener("DOMContentLoaded", () => {
+  const mapElement = document.getElementById("map");
+  if (!mapElement) {
+    console.error("Error: #map 要素が見つかりません");
+    return;
+  }
+
   searchMap = L.map('map').setView([35.6895, 139.6917], 10);
+
   L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
     attribution: 'Tiles &copy; Esri'
   }).addTo(searchMap);
+  
+  console.log("Leaflet map initialized successfully.");
   updateLanguage();
-
-  // 投資ポートフォリオに複数のデモデータを投入
-  investedFarms.push({ name: "農地A", amount: 1500000 });
-  investedFarms.push({ name: "農地B", amount: 2000000 });
-  investedFarms.push({ name: "農地C", amount: 1200000 });
-  updateInvestedFarmsUI();
 });
+
 
 /****************************************************
  * タブ切替（簡易検索／詳細検索）

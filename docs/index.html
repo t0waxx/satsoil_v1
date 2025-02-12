@@ -7,7 +7,7 @@
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.3/dist/leaflet.css" crossorigin=""/>
 
   <!-- メインCSS -->
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="style.css?<?php echo date('YmdHis'); ?>">
 </head>
 <body>
   <!-- ヘッダー -->
@@ -303,6 +303,6 @@
   <!-- Leaflet JS -->
   <script src="https://unpkg.com/leaflet@1.9.3/dist/leaflet.js" crossorigin=""></script>
   <!-- メイン JavaScript -->
-  <script src="script.js"></script>
+  <script src="script.js?<?php echo date('YmdHis'); ?>"></script>
 </body>
 </html>

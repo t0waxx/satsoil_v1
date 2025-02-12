@@ -102,7 +102,7 @@ window.addEventListener("DOMContentLoaded", () => {
     return;
   }
 
-  searchMap = L.map('map').setView([35.6895, 139.6917], 10);
+  searchMap = L.map('map').setView([43.762857, 142.453450], 16);
 
   L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
     attribution: 'Tiles &copy; Esri'

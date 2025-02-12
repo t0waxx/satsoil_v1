@@ -211,7 +211,7 @@ function searchFarmland() {
       waterSupply: waterSupply,
       accessibility: accessibility,
       cropDiversity: cropDiversity,
-      img: "https://via.placeholder.com/400x200?text=Farm+" + letter
+      img: "https://placehold.jp/800x400?text=Farm+" + letter
     };
   });
   
@@ -269,10 +269,10 @@ function searchFarmland() {
 function changeImage(year) {
   const img = document.getElementById("satelliteImage");
   switch(year) {
-    case 2020: img.src = "https://via.placeholder.com/400x200?text=Satellite+2020"; break;
-    case 2021: img.src = "https://via.placeholder.com/400x200?text=Satellite+2021"; break;
-    case 2022: img.src = "https://via.placeholder.com/400x200?text=Satellite+2022"; break;
-    default: img.src = "https://via.placeholder.com/400x200?text=Satellite+Default";
+    case 2020: img.src = "https://placehold.jp/800x400?text=Satellite+2020"; break;
+    case 2021: img.src = "https://placehold.jp/800x400?text=Satellite+2021"; break;
+    case 2022: img.src = "https://placehold.jp/800x400?text=Satellite+2022"; break;
+    default: img.src = "https://placehold.jp/800x400?text=Satellite+Default";
   }
 }
 
@@ -296,10 +296,10 @@ function simulateInvestment() {
 function changeFarmAImage(year) {
   const img = document.getElementById("farmAImage");
   switch(year) {
-    case 2020: img.src = "https://via.placeholder.com/400x200?text=FarmA+2020"; break;
-    case 2021: img.src = "https://via.placeholder.com/400x200?text=FarmA+2021"; break;
-    case 2022: img.src = "https://via.placeholder.com/400x200?text=FarmA+2022"; break;
-    default: img.src = "https://via.placeholder.com/400x200?text=FarmA+Default";
+    case 2020: img.src = "https://placehold.jp/800x400?text=FarmA+2020"; break;
+    case 2021: img.src = "https://placehold.jp/800x400?text=FarmA+2021"; break;
+    case 2022: img.src = "https://placehold.jp/800x400?text=FarmA+2022"; break;
+    default: img.src = "https://placehold.jp/800x400?text=FarmA+Default";
   }
 }
 function updateFarmASimulation() {
@@ -317,10 +317,10 @@ function updateFarmASimulation() {
 function changeFarmBImage(year) {
   const img = document.getElementById("farmBImage");
   switch(year) {
-    case 2020: img.src = "https://via.placeholder.com/400x200?text=FarmB+2020"; break;
-    case 2021: img.src = "https://via.placeholder.com/400x200?text=FarmB+2021"; break;
-    case 2022: img.src = "https://via.placeholder.com/400x200?text=FarmB+2022"; break;
-    default: img.src = "https://via.placeholder.com/400x200?text=FarmB+Default";
+    case 2020: img.src = "https://placehold.jp/800x400?text=FarmB+2020"; break;
+    case 2021: img.src = "https://placehold.jp/800x400?text=FarmB+2021"; break;
+    case 2022: img.src = "https://placehold.jp/800x400?text=FarmB+2022"; break;
+    default: img.src = "https://placehold.jp/800x400?text=FarmB+Default";
   }
 }
 function updateFarmBSimulation() {
@@ -330,10 +330,10 @@ function updateFarmBSimulation() {
 function changeFarmCImage(year) {
   const img = document.getElementById("farmCImage");
   switch(year) {
-    case 2020: img.src = "https://via.placeholder.com/400x200?text=FarmC+2020"; break;
-    case 2021: img.src = "https://via.placeholder.com/400x200?text=FarmC+2021"; break;
-    case 2022: img.src = "https://via.placeholder.com/400x200?text=FarmC+2022"; break;
-    default: img.src = "https://via.placeholder.com/400x200?text=FarmC+Default";
+    case 2020: img.src = "https://placehold.jp/800x400?text=FarmC+2020"; break;
+    case 2021: img.src = "https://placehold.jp/800x400?text=FarmC+2021"; break;
+    case 2022: img.src = "https://placehold.jp/800x400?text=FarmC+2022"; break;
+    default: img.src = "https://placehold.jp/800x400?text=FarmC+Default";
   }
 }
 function updateFarmCSimulation() {
